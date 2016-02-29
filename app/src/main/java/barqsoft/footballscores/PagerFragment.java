@@ -17,6 +17,8 @@ import java.util.Date;
 
 /**
  * Created by yehya khaled on 2/27/2015.
+ * This is the pager fragment that displays various fragments. It loads 5 different MainScreenFragment with different dates thus showing
+ * matches for 5 different days
  */
 public class PagerFragment extends Fragment
 {
@@ -32,6 +34,7 @@ public class PagerFragment extends Fragment
         mPagerAdapter = new myPageAdapter(getChildFragmentManager());
         for (int i = 0;i < NUM_PAGES;i++)
         {
+            // The date is set by adding/subtracting day time in milliseconds to get the next or previous date to today's date
             Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*86400000));
             SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
             viewFragments[i] = new MainScreenFragment();
@@ -41,6 +44,8 @@ public class PagerFragment extends Fragment
         mPagerHandler.setCurrentItem(MainActivity.current_fragment);
         return rootView;
     }
+
+    /** Adapter for the pagerView */
     private class myPageAdapter extends FragmentStatePagerAdapter
     {
         @Override
@@ -65,6 +70,8 @@ public class PagerFragment extends Fragment
         {
             return getDayName(getActivity(),System.currentTimeMillis()+((position-2)*86400000));
         }
+
+        /** Returns the day name (today, tomorrow, yesterday or week day name) based on time set for position of fragment*/
         public String getDayName(Context context, long dateInMillis) {
             // If the date is today, return the localized version of "Today" instead of the actual
             // day name.

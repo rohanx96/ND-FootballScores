@@ -27,6 +27,7 @@ import barqsoft.footballscores.R;
 
 /**
  * Created by yehya khaled on 3/2/2015.
+ * This service fetches data from football-data.org and bulk inserts it into our database
  */
 public class myFetchService extends IntentService
 {
@@ -87,6 +88,7 @@ public class myFetchService extends IntentService
                 return;
             }
             JSON_data = buffer.toString();
+            Log.i(LOG_TAG,"Received data:\n" + JSON_data);
         }
         catch (Exception e)
         {
@@ -112,9 +114,10 @@ public class myFetchService extends IntentService
             if (JSON_data != null) {
                 //This bit is to check if the data contains any matches. If not, we call processJson on the dummy data
                 JSONArray matches = new JSONObject(JSON_data).getJSONArray("fixtures");
-                if (matches.length() == 0) {
+                if (matches == null || matches.length() == 0) {
                     //if there is no data, call the function on dummy data
                     //this is expected behavior during the off season.
+                    Log.i(LOG_TAG,"sending dummy data");
                     processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
                     return;
                 }

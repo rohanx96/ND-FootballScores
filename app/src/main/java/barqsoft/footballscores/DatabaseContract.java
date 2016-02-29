@@ -32,14 +32,19 @@ public class DatabaseContract
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH;
 
+        /** Uri Query to get scores by league */
         public static Uri buildScoreWithLeague()
         {
             return BASE_CONTENT_URI.buildUpon().appendPath("league").build();
         }
+
+        /** Uri query to get scores by ID */
         public static Uri buildScoreWithId()
         {
             return BASE_CONTENT_URI.buildUpon().appendPath("id").build();
         }
+
+        /** Uri query to get scores by date */
         public static Uri buildScoreWithDate()
         {
             return BASE_CONTENT_URI.buildUpon().appendPath("date").build();

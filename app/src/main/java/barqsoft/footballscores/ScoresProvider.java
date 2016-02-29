@@ -21,6 +21,7 @@ public class ScoresProvider extends ContentProvider
     private UriMatcher muriMatcher = buildUriMatcher();
     private static final SQLiteQueryBuilder ScoreQuery =
             new SQLiteQueryBuilder();
+    // selection criteria to get matches for particular league. Used with Uri query for MATCHES_WITH_LEAGUE
     private static final String SCORES_BY_LEAGUE = DatabaseContract.scores_table.LEAGUE_COL + " = ?";
     private static final String SCORES_BY_DATE =
             DatabaseContract.scores_table.DATE_COL + " LIKE ?";

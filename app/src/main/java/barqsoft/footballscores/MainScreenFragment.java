@@ -16,7 +16,7 @@ import android.widget.ListView;
 import barqsoft.footballscores.service.myFetchService;
 
 /**
- * A placeholder fragment containing a simple view.
+ * A placeholder fragment containing a simple view. It displays the matches for a particular day
  */
 public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
@@ -38,6 +38,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     {
         fragmentdate[0] = date;
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {

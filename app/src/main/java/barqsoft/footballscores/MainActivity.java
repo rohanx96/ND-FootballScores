@@ -61,6 +61,7 @@ public class MainActivity extends ActionBarActivity
         Log.v(save_tag,"selected id: "+selected_match_id);
         outState.putInt("Pager_Current",my_main.mPagerHandler.getCurrentItem());
         outState.putInt("Selected_match",selected_match_id);
+        // This makes sure that our my_main variable holds a reference to the pager fragment on configuration changes
         getSupportFragmentManager().putFragment(outState,"my_main",my_main);
         super.onSaveInstanceState(outState);
     }
