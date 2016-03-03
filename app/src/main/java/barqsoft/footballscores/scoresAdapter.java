@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class scoresAdapter extends CursorAdapter
     public static final int COL_MATCHDAY = 9;
     public static final int COL_ID = 8;
     public static final int COL_MATCHTIME = 2;
+    // This variable stores the match id  of the currently expanded list item
     public double detail_match_id = 0;
     private String FOOTBALL_SCORES_HASHTAG = "#Football_Scores";
     public scoresAdapter(Context context,Cursor cursor,int flags)
@@ -60,7 +62,9 @@ public class scoresAdapter extends CursorAdapter
         LayoutInflater vi = (LayoutInflater) context.getApplicationContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.detail_fragment, null);
+        //This viewGroup is the frame layout that will hold the details of the match. This is not a fragment though the id suggests so
         ViewGroup container = (ViewGroup) view.findViewById(R.id.details_fragment_container);
+        // detail match id is set as the selected item match id in the onClickListener. So this will be true for selected item
         if(mHolder.match_id == detail_match_id)
         {
             //Log.v(FetchScoreTask.LOG_TAG,"will insert extraView");
@@ -83,6 +87,7 @@ public class scoresAdapter extends CursorAdapter
                 }
             });
         }
+        // Remove views(collapse) from details container of non selected items
         else
         {
             container.removeAllViews();

@@ -31,6 +31,7 @@ import barqsoft.footballscores.R;
  */
 public class myFetchService extends IntentService
 {
+    public static final String INTENT_ACTION_UPDATE_WIDGET = "barqsoft.footbalscores.myFetchService.updateWidget";
     public static final String LOG_TAG = "myFetchService";
     public myFetchService()
     {
@@ -267,8 +268,12 @@ public class myFetchService extends IntentService
             values.toArray(insert_data);
             inserted_data = mContext.getContentResolver().bulkInsert(
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
-
-            //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
+            /* If one or more items are inserted then update the widget */
+            if(inserted_data>0){
+                Intent updateWidget = new Intent(INTENT_ACTION_UPDATE_WIDGET);
+                sendBroadcast(updateWidget); // This broadcast will be received by our widget provider
+            }
+            Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
         }
         catch (JSONException e)
         {

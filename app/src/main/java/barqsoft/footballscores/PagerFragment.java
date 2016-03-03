@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import barqsoft.footballscores.widget.CollectionWidgetProvider;
+
 /**
  * Created by yehya khaled on 2/27/2015.
  * This is the pager fragment that displays various fragments. It loads 5 different MainScreenFragment with different dates thus showing
@@ -38,6 +40,9 @@ public class PagerFragment extends Fragment
             Date fragmentdate = new Date(System.currentTimeMillis()+((i-2)*86400000));
             SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
             viewFragments[i] = new MainScreenFragment();
+            // If the selected match id has been set then set the same for the fragment
+            //if (getArguments().getDouble(CollectionWidgetProvider.EXTRA_POSITION,-1)!= -1)
+            //    viewFragments[i].setmSelectedMatchId(getArguments().getDouble(CollectionWidgetProvider.EXTRA_POSITION));
             viewFragments[i].setFragmentDate(mformat.format(fragmentdate));
         }
         mPagerHandler.setAdapter(mPagerAdapter);

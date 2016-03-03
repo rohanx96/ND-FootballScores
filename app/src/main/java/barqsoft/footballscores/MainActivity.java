@@ -6,27 +6,41 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import barqsoft.footballscores.widget.CollectionWidgetProvider;
 
 public class MainActivity extends ActionBarActivity
 {
+    // This variable stores the match id of the selected item in the fragment
     public static int selected_match_id;
+    // This variable stores the position of the selected item
+    public static int selected_position;
     public static int current_fragment = 2;
     public static String LOG_TAG = "MainActivity";
     private final String save_tag = "Save Test";
     private PagerFragment my_main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(LOG_TAG, "Reached MainActivity onCreate");
         if (savedInstanceState == null) {
+            // if position is set in intent then set the selected match id for the mainActivity. This is used to expand the corresponding
+            //position when entering through widget
+            if (getIntent().getDoubleExtra(CollectionWidgetProvider.EXTRA_MATCH_ID,-1)!= -1) {
+                double match_id = getIntent().getDoubleExtra(CollectionWidgetProvider.EXTRA_MATCH_ID, -1);
+                selected_match_id = (int) match_id;
+                selected_position = getIntent().getIntExtra(CollectionWidgetProvider.EXTRA_POSITION,0);
+            }
             my_main = new PagerFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, my_main)
                     .commit();
+
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

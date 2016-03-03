@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     public scoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
-    private int last_selected_item = -1;
+    private ListView score_list;
 
     public MainScreenFragment()
     {
@@ -44,11 +45,12 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
                              final Bundle savedInstanceState) {
         update_scores();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
+        score_list = (ListView) rootView.findViewById(R.id.scores_list);
         mAdapter = new scoresAdapter(getActivity(),null,0);
         score_list.setAdapter(mAdapter);
-        getLoaderManager().initLoader(SCORES_LOADER,null,this);
+        getLoaderManager().initLoader(SCORES_LOADER, null, this);
         mAdapter.detail_match_id = MainActivity.selected_match_id;
+        Log.i("mainFragment", " " + MainActivity.selected_position);
         score_list.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -57,6 +59,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
                 ViewHolder selected = (ViewHolder) view.getTag();
                 mAdapter.detail_match_id = selected.match_id;
                 MainActivity.selected_match_id = (int) selected.match_id;
+                MainActivity.selected_position = position;
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -92,6 +95,8 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         }
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
         mAdapter.swapCursor(cursor);
+        //This will scroll to the selected position. Used when entering fragment from widget with selection position set
+        score_list.setSelection(MainActivity.selected_position);
         //mAdapter.notifyDataSetChanged();
     }
 
@@ -100,6 +105,4 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     {
         mAdapter.swapCursor(null);
     }
-
-
 }
