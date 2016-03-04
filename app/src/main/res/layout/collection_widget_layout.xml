@@ -8,7 +8,7 @@
         android:id="@+id/widget_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/todays_scores"
         android:background="@color/purple01"
         android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"

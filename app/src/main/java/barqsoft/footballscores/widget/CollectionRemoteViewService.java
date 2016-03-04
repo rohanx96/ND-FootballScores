@@ -20,13 +20,14 @@ import barqsoft.footballscores.R;
 import barqsoft.footballscores.Utilies;
 
 /**
- * This class is responsible for binding remote views to our list collection widget
+ * This service is responsible for binding remote views to our list collection widget
  * Created by rose on 1/3/16.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class CollectionRemoteViewService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
+        // create a new adapter for the remote views
         return new ListRemoteViewsFactory(this);
     }
 
@@ -91,7 +92,7 @@ public class CollectionRemoteViewService extends RemoteViewsService {
             mHolder.setTextViewText(R.id.away_name,mCursor.getString(COL_AWAY));
             mHolder.setTextViewText(R.id.data_textview,mCursor.getString(COL_MATCHTIME));
             mHolder.setTextViewText(R.id.score_textview,
-                    Utilies.getScores(mCursor.getInt(COL_HOME_GOALS), mCursor.getInt(COL_AWAY_GOALS)));
+                    Utilies.getScores(mCursor.getInt(COL_HOME_GOALS), mCursor.getInt(COL_AWAY_GOALS),mContext));
             mHolder.setImageViewResource(R.id.home_crest, Utilies.getTeamCrestByTeamName(mCursor.getString(COL_HOME)));
             mHolder.setImageViewResource(R.id.away_crest, Utilies.getTeamCrestByTeamName(mCursor.getString(COL_AWAY)
             ));
